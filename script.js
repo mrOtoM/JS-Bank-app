@@ -3,7 +3,7 @@
 // DATA
 const account1 = {
   owner: 'Oto Machala',
-  movements: [100, 200, 300, -500, -123, 10, 650, -2300],
+  movements: [100, 200, 300, -500, -123, 10, 650, -2300, 20],
   interestRate: 1.2,
   pin: 1111,
 };
@@ -32,6 +32,7 @@ const accounts = [account1, account2, account3, account4];
 // Elements
 const containerApp = document.querySelector('.app');
 const containerMovements = document.querySelector('.movements');
+const labelBalance = document.querySelector('.balance__value');
 
 //Logic
 const displayMovements = function (movements) {
@@ -48,5 +49,23 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
-
 displayMovements(account1.movements);
+
+// Show current balance
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((accumulator, mov) => accumulator + mov, 0);
+  labelBalance.textContent = `${balance} EUR`;
+};
+calcDisplayBalance(account1.movements); // Edit later
+
+// USERNAME short name
+const createUsernames = function (accs) {
+  accs.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLocaleLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('');
+  });
+};
+createUsernames(accounts);
