@@ -62,7 +62,7 @@ const calcDisplayBalance = function (movements) {
 };
 calcDisplayBalance(account1.movements); // Edit later
 
-// Incomes and Outcomes money
+// Incomes and Outcomes and Interest money
 const calcDisplaySummary = function (movements) {
   const incomes = movements
     .filter(mov => mov > 0)
@@ -77,6 +77,7 @@ const calcDisplaySummary = function (movements) {
   const interest = movements
     .filter(mov => mov > 0)
     .map(deposit => deposit * (account1.interestRate / 100)) // Edit later
+    .filter(int => int >= 1)
     .reduce((acc, int) => acc + int, 0);
   labelSumInt.textContent = `${interest}€`;
 };
