@@ -3,7 +3,7 @@
 // DATA
 const account1 = {
   owner: 'Oto Machala',
-  movements: [100, 200, 300, -500, -123, 10, 650, -2300, 20],
+  movements: [100, 200, 300, -500, -123, 10, 650, 2300, 20],
   interestRate: 1.2,
   pin: 1111,
 };
@@ -40,8 +40,11 @@ const labelSumInt = document.querySelector('.summary__value--interest');
 const labelWelcome = document.querySelector('.welcome');
 
 const btnLogin = document.querySelector('.login__btn');
+const bntTransfer = document.querySelector('.form__btn--transfer');
 const inputLoginUsername = document.querySelector('.login__input--user');
 const inputLoginPin = document.querySelector('.login__input--pin');
+const inputTransferTo = document.querySelector('.form__input--to');
+const inputTransferAmount = document.querySelector('.form__input--amount');
 
 //Logic
 const displayMovements = function (movements) {
@@ -58,11 +61,13 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML('afterbegin', html);
   });
 };
-
 // Show current balance
-const calcDisplayBalance = function (movements) {
-  const balance = movements.reduce((accumulator, mov) => accumulator + mov, 0);
-  labelBalance.textContent = `${balance}€`;
+const calcDisplayBalance = function (acc) {
+  acc.balance = acc.movements.reduce(
+    (accumulator, mov) => accumulator + mov,
+    0
+  );
+  labelBalance.textContent = `${acc.balance}€`;
 };
 
 // Incomes and Outcomes and Interest money
@@ -97,12 +102,20 @@ const createUsernames = function (accs) {
 };
 createUsernames(accounts);
 
+const updateUI = function (acc) {
+  // display movements
+  displayMovements(acc.movements);
+  // display balance
+  calcDisplayBalance(acc);
+  // display summary
+  calcDisplaySummary(acc);
+};
+
 // Event Handler - Login
 let currentAccount;
 
 btnLogin.addEventListener('click', function (event) {
   event.preventDefault(); // stop reload webpage
-  console.log('login');
 
   currentAccount = accounts.find(
     acc => acc.username === inputLoginUsername.value
@@ -121,11 +134,48 @@ btnLogin.addEventListener('click', function (event) {
     inputLoginUsername.value = '';
     inputLoginPin.value = '';
 
-    // display movements
-    displayMovements(currentAccount.movements);
-    // display balance
-    calcDisplayBalance(currentAccount.movements);
-    // display summary
-    calcDisplaySummary(currentAccount);
+    // update UI
+    updateUI(currentAccount);
   }
 });
+
+// Evenet handler - transfer
+bntTransfer.addEventListener('click', function (event) {
+  event.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const receiverAcc = accounts.find(
+    acc => acc.username === inputTransferTo.value
+  );
+  inputTransferAmount.value = 0;
+  inputTransferTo.value = 0;
+  if (
+    amount > 0 &&
+    receiverAcc &&
+    currentAccount.balance >= amount &&
+    receiverAcc?.username !== currentAccount.username
+  ) {
+    currentAccount.movements.push(-amount);
+    receiverAcc.movements.push(amount);
+
+    // update UI
+    updateUI(currentAccount);
+  } else {
+    console.log('transfer invalid');
+  }
+});
+
+// const checkDogs = function (dogsJulia, DogsKate) {
+//   const dogsJulicaCorected = dogsJulia.splice()
+// };
+
+// checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
+
+const euroToUsd = 1.1;
+
+// Pipeline
+const totalDepositUSD = account1.movements
+  .filter(mov => mov > 0)
+  .map(mov => mov * euroToUsd)
+  .reduce((acc, mov) => acc + mov, 0);
+
+// console.log(totalDepositUSD);
