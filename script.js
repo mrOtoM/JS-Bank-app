@@ -43,6 +43,7 @@ const btnClose = document.querySelector('.form__btn--close');
 const btnLogin = document.querySelector('.login__btn');
 const bntTransfer = document.querySelector('.form__btn--transfer');
 const btnLoan = document.querySelector('.form__btn--loan');
+const btnSort = document.querySelector('.btn--sort');
 const inputLoginUsername = document.querySelector('.login__input--user');
 const inputLoginPin = document.querySelector('.login__input--pin');
 const inputTransferTo = document.querySelector('.form__input--to');
@@ -52,9 +53,12 @@ const inputClosePin = document.querySelector('.form__input--pin');
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 
 //Logic
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = ''; // hide actual value from index.html
-  movements.forEach(function (mov, i) {
+
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
     const html = `
     <div class="movements__row">
@@ -199,6 +203,15 @@ btnClose.addEventListener('click', function (e) {
     // Hide UI
     containerApp.style.opacity = 0;
   }
+});
+
+let sorted = false;
+
+// Even handler - Btn sort
+btnSort.addEventListener('click', function (e) {
+  e.preventDefault();
+  displayMovements(currentAccount.movements, !sorted);
+  sorted = !sorted;
 });
 
 const euroToUsd = 1.1;
