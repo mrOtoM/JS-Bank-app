@@ -39,12 +39,15 @@ const labelSumOut = document.querySelector('.summary__value--out');
 const labelSumInt = document.querySelector('.summary__value--interest');
 const labelWelcome = document.querySelector('.welcome');
 
+const btnClose = document.querySelector('.form__btn--close');
 const btnLogin = document.querySelector('.login__btn');
 const bntTransfer = document.querySelector('.form__btn--transfer');
 const inputLoginUsername = document.querySelector('.login__input--user');
 const inputLoginPin = document.querySelector('.login__input--pin');
 const inputTransferTo = document.querySelector('.form__input--to');
 const inputTransferAmount = document.querySelector('.form__input--amount');
+const inputCloseUsername = document.querySelector('.form__input--user');
+const inputClosePin = document.querySelector('.form__input--pin');
 
 //Logic
 const displayMovements = function (movements) {
@@ -164,18 +167,28 @@ bntTransfer.addEventListener('click', function (event) {
   }
 });
 
-// const checkDogs = function (dogsJulia, DogsKate) {
-//   const dogsJulicaCorected = dogsJulia.splice()
-// };
+// Event hanlder - close account
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault();
 
-// checkDogs([3, 5, 2, 12, 7], [4, 1, 15, 8, 3]);
+  if (
+    inputCloseUsername.value === currentAccount.username &&
+    Number(inputClosePin.value) === currentAccount.pin
+  ) {
+    const index = accounts.findIndex(
+      acc => acc.username === currentAccount.username
+    );
+    // Delete acc
+    accounts.splice(index, 1);
+    // Hide UI
+    containerApp.style.opacity = 0;
+  }
+});
 
 const euroToUsd = 1.1;
 
-// Pipeline
+// transfer eur to usd
 const totalDepositUSD = account1.movements
   .filter(mov => mov > 0)
   .map(mov => mov * euroToUsd)
   .reduce((acc, mov) => acc + mov, 0);
-
-// console.log(totalDepositUSD);
