@@ -3,7 +3,7 @@
 // DATA
 const account1 = {
   owner: 'Oto Machala',
-  movements: [100, 200, 300, -500, -123, 10, 650, 2300, 20],
+  movements: [100, 200, 300, -500, -123, 10, 650, 1300, -20],
   interestRate: 1.2,
   pin: 1111,
 };
@@ -38,6 +38,7 @@ const labelSumIn = document.querySelector('.summary__value--in');
 const labelSumOut = document.querySelector('.summary__value--out');
 const labelSumInt = document.querySelector('.summary__value--interest');
 const labelWelcome = document.querySelector('.welcome');
+const labelDate = document.querySelector('.balance__date');
 
 const btnClose = document.querySelector('.form__btn--close');
 const btnLogin = document.querySelector('.login__btn');
@@ -122,6 +123,15 @@ const updateUI = function (acc) {
 
 // Event Handler - Login
 let currentAccount;
+
+// Current balance DATE
+const now = new Date();
+const day = `${now.getDate()}`.padStart(2, 0);
+const month = `${now.getMonth() + 1}`.padStart(2, 0);
+const year = now.getFullYear();
+const hour = now.getHours();
+const min = now.getMinutes();
+labelDate.textContent = `${day}/${month}/${year}, ${hour}: ${min}`;
 
 btnLogin.addEventListener('click', function (event) {
   event.preventDefault(); // stop reload webpage
