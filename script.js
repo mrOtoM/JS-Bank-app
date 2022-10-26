@@ -179,9 +179,9 @@ const updateUI = function (acc) {
 let currentAccount;
 
 //-------------------
-currentAccount = account1;
-updateUI(currentAccount);
-containerApp.style.opacity = 100;
+// currentAccount = account1;
+// updateUI(currentAccount);
+// containerApp.style.opacity = 100;
 
 // ------------------
 
