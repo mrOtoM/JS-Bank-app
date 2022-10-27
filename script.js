@@ -83,6 +83,7 @@ const labelSumOut = document.querySelector('.summary__value--out');
 const labelSumInt = document.querySelector('.summary__value--interest');
 const labelWelcome = document.querySelector('.welcome');
 const labelDate = document.querySelector('.balance__date');
+const labelTimer = document.querySelector('.timer');
 
 const btnClose = document.querySelector('.form__btn--close');
 const btnLogin = document.querySelector('.login__btn');
@@ -175,8 +176,27 @@ const updateUI = function (acc) {
   calcDisplaySummary(acc);
 };
 
+// Logout Timer
+const startLogOutTimer = function () {
+  const tick = function () {
+    const min = String(Math.trunc(time / 60)).padStart(2, 0);
+    const sec = String(time % 60).padStart(2, 0);
+    labelTimer.textContent = `${min}:${sec}`;
+    if (time === 0) {
+      clearInterval(timer); // stop timer
+      labelWelcome.textContent = 'Log in to get started';
+      containerApp.style.opacity = 0;
+    }
+    time = time - 1; // decrease 1s
+  };
+  let time = 120; // starting time
+  tick();
+  const timer = setInterval(tick, 1000);
+  return timer;
+};
+
 // Event Handler - Login
-let currentAccount;
+let currentAccount, timer;
 
 //-------------------
 // currentAccount = account1;
@@ -204,7 +224,6 @@ btnLogin.addEventListener('click', function (event) {
 
   if (currentAccount?.pin === Number(inputLoginPin.value)) {
     //dispaly welocome msg
-    console.log('login pin');
     labelWelcome.textContent = `welcome back ${
       currentAccount.owner.split('  ')[0]
     }`;
@@ -214,6 +233,8 @@ btnLogin.addEventListener('click', function (event) {
     inputLoginUsername.value = '';
     inputLoginPin.value = '';
 
+    if (timer) clearInterval(timer); // only 1 timer is allow
+    timer = startLogOutTimer();
     // update UI
     updateUI(currentAccount);
   }
@@ -226,8 +247,8 @@ bntTransfer.addEventListener('click', function (event) {
   const receiverAcc = accounts.find(
     acc => acc.username === inputTransferTo.value
   );
-  inputTransferAmount.value = 0;
-  inputTransferTo.value = 0;
+  inputTransferAmount.value = '';
+  inputTransferTo.value = '';
   if (
     amount > 0 &&
     receiverAcc &&
@@ -242,6 +263,10 @@ bntTransfer.addEventListener('click', function (event) {
     receiverAcc.movementsDates.push(new Date());
     // update UI
     updateUI(currentAccount);
+
+    //Reset timer
+    clearInterval(timer);
+    timer = startLogOutTimer();
   } else {
     console.log('transfer invalid');
   }
@@ -262,6 +287,10 @@ btnLoan.addEventListener('click', function (e) {
 
       // Update UI
       updateUI(currentAccount);
+
+      //Reset timer
+      clearInterval(timer);
+      timer = startLogOutTimer();
     }, 2000);
   }
   inputLoanAmount.value = '';
