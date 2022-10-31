@@ -37,7 +37,7 @@ const account2 = {
 };
 const account3 = {
   owner: 'Maria Kolacova',
-  movements: [14, 1200, -200, 530, 210, -55, -34, -150, 1100],
+  movements: [1200, -200, 530, 210, -550, -340, -150, 1100],
   interestRate: 1.2,
   pin: 3333,
 
@@ -50,6 +50,7 @@ const account3 = {
     '2022-09-26T17:01:17.194Z',
     '2022-09-28T23:36:17.929Z',
     '2022-10-01T10:51:36.790Z',
+    '2022-11-01T10:51:36.790Z',
   ],
 };
 
@@ -57,7 +58,7 @@ const account4 = {
   owner: 'Jozef Mak',
   movements: [100, -123, 1030, 210, -55],
   interestRate: 1.2,
-  pin: 3333,
+  pin: 4444,
 
   movementsDates: [
     '2021-11-18T21:31:17.178Z',
@@ -90,6 +91,7 @@ const btnLogin = document.querySelector('.login__btn');
 const bntTransfer = document.querySelector('.form__btn--transfer');
 const btnLoan = document.querySelector('.form__btn--loan');
 const btnSort = document.querySelector('.btn--sort');
+const btnInfo = document.querySelector('.btn--info');
 const inputLoginUsername = document.querySelector('.login__input--user');
 const inputLoginPin = document.querySelector('.login__input--pin');
 const inputTransferTo = document.querySelector('.form__input--to');
@@ -97,6 +99,8 @@ const inputTransferAmount = document.querySelector('.form__input--amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
+const modalInfo = document.querySelector('.modal');
+const closeModal = document.querySelector('.close-modal');
 
 //Logic
 const displayMovements = function (acc, sort = false) {
@@ -152,7 +156,7 @@ const calcDisplaySummary = function (account) {
     .map(deposit => deposit * (account.interestRate / 100)) // Edit later
     .filter(int => int >= 1)
     .reduce((acc, int) => acc + int, 0);
-  labelSumInt.textContent = `${interest}€`;
+  labelSumInt.textContent = `${interest.toFixed(2)}€`;
 };
 
 // Username short name
@@ -316,7 +320,7 @@ btnClose.addEventListener('click', function (e) {
 
 let sorted = false;
 
-// Even handler - Btn sort
+// Event handler - Btn sort
 btnSort.addEventListener('click', function (e) {
   e.preventDefault();
   displayMovements(currentAccount, !sorted);
@@ -330,3 +334,20 @@ const totalDepositUSD = account1.movements
   .filter(mov => mov > 0)
   .map(mov => mov * euroToUsd)
   .reduce((acc, mov) => acc + mov, 0);
+
+// Event handler - Btn info
+
+btnInfo.addEventListener('click', function () {
+  modalInfo.classList.remove('hidden');
+  console.log('ahojj');
+});
+
+closeModal.addEventListener('click', function () {
+  modalInfo.classList.add('hidden');
+});
+
+document.addEventListener('keydown', function (esc) {
+  if (esc.key === 'Escape') {
+    modalInfo.classList.add('hidden');
+  }
+});

@@ -17,6 +17,7 @@ body {
   background-color: #f3f3f3;
   height: 100vh;
   padding: 2rem;
+  position: relative;
 }
 
 nav {
@@ -98,7 +99,7 @@ nav {
 .app {
   position: relative;
   max-width: 100rem;
-  margin: 4rem auto;
+  margin: 2rem auto;
   display: grid;
   grid-template-columns: 4fr 3fr;
   grid-template-rows: auto repeat(3, 15rem) auto;
@@ -305,4 +306,68 @@ h2 {
 
 .timer {
   font-weight: 600;
+}
+
+/* --------------------- INFO CONTAINER ----------------- */
+
+.btn--info {
+  margin-left: 16px;
+  top: 10rem;
+  font-size: 5.5rem;
+  padding: 2.5rem 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.3s;
+  border: 1px solid rgb(74, 74, 74);
+}
+
+.btn--info:hover {
+  background-color: rgb(204, 7, 7);
+  border: 1px solid #ccc;
+}
+
+.hidden {
+  display: none;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40rem;
+
+  background-color: white;
+  padding: 6rem;
+  border-radius: 5px;
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+  z-index: 10;
+}
+
+.close-modal {
+  position: absolute;
+  top: 1.2rem;
+  right: 2rem;
+  font-size: 5rem;
+  color: #333;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+.modal ul {
+  list-style: none;
+}
+
+.modal h1 {
+  margin-bottom: 1rem;
+}
+
+.modal p {
+  font-size: 2rem;
+  line-height: 3rem;
+}
+
+.modal p span {
+  font-weight: 500;
 }
