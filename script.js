@@ -101,10 +101,12 @@ const inputClosePin = document.querySelector('.form__input--pin');
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const modalInfo = document.querySelector('.modal');
 const closeModal = document.querySelector('.close-modal');
+const infoModal = document.querySelector('.info__container');
 
 //Logic
 const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = ''; // hide actual value from index.html
+  infoModal.style.opacity = 0;
 
   const movs = sort
     ? acc.movements.slice().sort((a, b) => a - b)
@@ -220,7 +222,6 @@ labelDate.textContent = `${day}/${month}/${year}, ${hour}: ${min}`;
 
 btnLogin.addEventListener('click', function (event) {
   event.preventDefault(); // stop reload webpage
-
   currentAccount = accounts.find(
     acc => acc.username === inputLoginUsername.value
   );

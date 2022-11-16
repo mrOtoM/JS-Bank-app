@@ -4,6 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: inherit;
+  list-style: none;
 }
 
 html {
@@ -326,22 +327,27 @@ h2 {
   border: 1px solid #ccc;
 }
 
-.hidden {
-  display: none;
-}
-
 .modal {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 70%;
+  width: 50rem;
+  height: 25rem;
 
   background-color: white;
-  padding: 6rem;
-  border-radius: 5px;
+  padding: 3rem;
+  border-radius: 10px;
   box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
   z-index: 10;
+  opacity: 1;
+  transition: opacity 0.3s ease-out;
+}
+
+.modal h1 {
+  text-align: center;
+  font-size: 3rem;
+  padding-bottom: 1.7rem;
 }
 
 .close-modal {
@@ -371,3 +377,48 @@ h2 {
 .modal p span {
   font-weight: 500;
 }
+
+.info__container {
+  background-color: #3d3d3d;
+  height: 25rem;
+  width: 50rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 1;
+  box-shadow: 0 3rem 5rem rgba(0, 0, 0, 0.3);
+
+  padding: 2rem;
+  border-radius: 10px;
+}
+
+.info__container h2 {
+  text-align: center;
+  font-size: 3rem;
+  color: #ffffff;
+}
+
+.info__container li {
+  font-size: 1.8rem;
+  padding-top: 0.5rem;
+  color: #d6dee1;
+}
+
+.hidden {
+  opacity: 0;
+  transition: opacity 0.1s;
+}
+
+/* .animate {
+  animation: slide-fade 1s ease-out;
+} */
+
+/* @keyframes slide-fade {
+  0% {
+    transform: translate(0) scale(0.1);
+  }
+
+  100% {
+    transform: translate(0) scale(1);
+  } */
